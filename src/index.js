@@ -6,15 +6,16 @@ import './index.css';
 import Counter from './components/Counter';
 
 // Redux
-import {createStore} from 'redux';
+import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
+import thunk from 'redux-thunk';
 
 const initialState = {
     count: 0
 }
 
 function reducer(state = initialState, action) {
-    console.log('reducer', state, action);
+    // console.log('reducer', state, action);
     switch(action.type) {
         case 'INCREMENT':
             return {
@@ -33,11 +34,10 @@ function reducer(state = initialState, action) {
     }
 }
 
-const store = createStore(reducer);
-store.dispatch({ type: 'INCREMENT' });
-store.dispatch({ type: 'INCREMENT' });
-store.dispatch({ type: 'DECREMENT' });
-store.dispatch({ type: 'RESET' });
+const store = createStore(
+    reducer,
+    applyMiddleware(thunk)
+    );
 
 const App = () => {
     return (
