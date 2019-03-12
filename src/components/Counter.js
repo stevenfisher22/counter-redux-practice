@@ -1,18 +1,26 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import { increment, decrement } from './actions';
 
 class Counter extends React.Component {
 
     increment = () => {
-        this.props.dispatch({type: "INCREMENT"})
+        // OLD WAY WITH MAHUAL ACTIONS
+        // this.props.dispatch({type: "INCREMENT"})
+
+        // NEW WAY WITH CALLING ACTION CREATOR
+        // this.props.dispatch(increment())
+
+        // NEW WAY UTILIZING ACTION CREATOR THROUGH mapDispatchToProps
+        this.props.increment();
     }
 
     decrement = () => {
-        this.props.dispatch({type: "DECREMENT"})
+        this.props.decrement();
     }
 
     reset = () => {
-        this.props.dispatch({type: "RESET"})
+        // this.props.dispatch({type: "RESET"})
     }
 
     render() {
@@ -36,4 +44,9 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(Counter)
+const mapDispatchToProps = {
+    increment, 
+    decrement
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter)
